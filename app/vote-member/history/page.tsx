@@ -128,7 +128,7 @@ export default function HistoryPage() {
                 Terms of use
               </Link>
             </div>
-            <div>© Erasmus.AI 2024</div>
+            <div>© VoterDrive.AI 2024</div>
           </div>
         </div>
       </footer>

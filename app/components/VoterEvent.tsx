@@ -8,7 +8,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Grid, List, Star, Edit, Trash, Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
+import Link from "next/link";
 
 interface Event {
   id: number;
@@ -29,12 +30,12 @@ interface Event {
 }
 
 export default function Header() {
-  const [events, setEvents] = useState<Event[]>([
+  const [events] = useState<Event[]>([
     {
       id: 1,
       title: "Student Organization Voter Registration Drive",
       description:
-        "This event will be a collaboration with all Texas Law student organizations that are interested in registering voters. The event will take place in the law school atrium. Interested student organization can sign up to table here: https://docs.google.com/spreadsheets/d/1n5AeF4l_noE2xPNxUvdRknM8Ad8ZaJp735iu1PD5pPk/edit?gid=650339494#gid=650339494.",
+        "This event will be a collaboration with all Texas Law student organizations that are interested in registering voters. The event will take place in the law school atrium.",
       imageUrl:
         "https://checkout.request.network/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1470229722913-7c0e2dbbafd3&w=1920&q=75",
       date: "September 25, 2025",
@@ -101,17 +102,13 @@ export default function Header() {
       date: "October 10, 2025",
       startTime: "2025-10-10T14:00:00.000Z",
       endTime: "2025-10-10T17:00:00.000Z",
-      sponsoredBy: [
-        "Digital Democracy Initiative",
-        "Youth Advocates of Florida",
-      ],
-      specificAudiences:
-        "Young influencers and tech-savvy individuals under 30",
+      sponsoredBy: ["Digital Democracy Initiative", "Youth Advocates of Florida"],
+      specificAudiences: "Young influencers and tech-savvy individuals under 30",
       ticketFee: 0.0,
       location: "TechHub Conference Center",
       city: "Miami",
       state: "FL",
-      category: "Technology & Advocacy",
+      category: "Voter Registration",
       onoffType: "In Person",
     },
     {
@@ -133,7 +130,7 @@ export default function Header() {
       location: "United Center",
       city: "Chicago",
       state: "IL",
-      category: "Sports & Recreation",
+      category: "Voter Education",
       onoffType: "In Person",
     },
     {
@@ -155,7 +152,7 @@ export default function Header() {
       location: "Los Angeles Convention Center",
       city: "Los Angeles",
       state: "LA",
-      category: "Youth Education",
+      category: "Voter Education",
       onoffType: "In Person",
     },
     {
@@ -177,7 +174,7 @@ export default function Header() {
       location: "Downtown Square",
       city: "Atlanta",
       state: "GA",
-      category: "Community Event",
+      category: "Voter Registration",
       onoffType: "In Person",
     },
     {
@@ -197,7 +194,7 @@ export default function Header() {
       location: "Union Hall",
       city: "Cleveland",
       state: "OH",
-      category: "Employment & Workforce",
+      category: "Voter Registration",
       onoffType: "In Person",
     },
     {
@@ -243,6 +240,14 @@ export default function Header() {
     },
   ]);
 
+  const categories = ["All", "Voter Education", "Voter Registration"];
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredEvents =
+    activeCategory === "All"
+      ? events
+      : events.filter((event) => event.category === activeCategory);
+
   return (
     <div>
       <main className="mt-8">
@@ -265,12 +270,36 @@ export default function Header() {
           </Card>
         </section>
 
+        <div className="flex gap-4 justify-between  py-5">
+          <div className="gap-2 flex">
+          {categories.map((category) => (
+          <Button
+            key={category}
+            variant={activeCategory === category ? "default" : "outline"}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </Button>
+        ))}
+          </div>
+
+          <div>
+            <Button>
+              Add Event
+            </Button>
+          </div>
+        
+      </div>
+
         <section className="gap-4 mb-8 grid md:grid-cols-3">
-          {events.map((event) => (
+          
+          {filteredEvents.map((event) => (
+           
             <Card
               key={event.id} // Ensure all IDs are unique
               className="w-[350px] flex flex-col justify-between shadow-sm border rounded-2xl"
             >
+               
               <div>
                 <img
                   src={event.imageUrl}
@@ -311,11 +340,18 @@ export default function Header() {
                 
                 <div className="flex gap-2">
                   <Button size="sm" className="">
+                  <Link
+                    href={`/vote-member/events/${event.id}`}
+                    className="text-lg font-medium hover:text-blue-400 transition-colors"
+                  >
                     View Details
+                    </Link>
                   </Button>
                 </div>
               </CardFooter>
+              
             </Card>
+            
           ))}
         </section>
       </main>

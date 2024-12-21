@@ -59,7 +59,7 @@ export const EventsProvider = ({ children }) => {
       event: "College Voter Registration Carnival",
       name:
         "A fun-filled carnival with games, food, and voter registration drives aimed at college students. Learn how to register to vote and participate in democracy.",
-      image:
+      imageUrl:
         "https://checkout.request.network/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1470229722913-7c0e2dbbafd3&w=1920&q=75",
       Date: "September 30, 2025",
       startTime: "2025-09-30T12:00:00.000Z",

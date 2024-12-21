@@ -8,7 +8,7 @@ export const MembersProvider = ({ children }) => {
     {
       id: 1,
       name: "Jordan Voter",
-      status: "Active",
+      status: "Published",
       image: "/profile2.jpg",
       points: "355",
       visibility: true,
